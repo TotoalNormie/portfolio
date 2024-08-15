@@ -137,8 +137,25 @@ const Drawer = () => {
 
     if (isNaN(currentX) || isNaN(currentY)) return;
 
-    const movementX = e.movementX / drawerWrapper.offsetWidth;
-    const movementY = e.movementY / drawerWrapper.offsetHeight;
+    let touchStartX, touchStartY, movementX, movementY;
+
+    // const touches = e.touches;
+    // if (touches && touches.length) {
+    //   const firstTouch = touches[0];
+    //   if (touchStartX === undefined || touchStartY === undefined) {
+    //     touchStartX = firstTouch.clientX;
+    //     touchStartY = firstTouch.clientY;
+    //   }
+
+    //   movementX = (firstTouch.clientX - touchStartX) / drawerWrapper.offsetWidth;
+    //   movementY = (firstTouch.clientY - touchStartY) / drawerWrapper.offsetHeight;
+    //   touchStartX = firstTouch.clientX;
+    //   touchStartY = firstTouch.clientY;
+    // }
+    
+
+    movementX = e.movementX / drawerWrapper.offsetWidth;
+    movementY = e.movementY / drawerWrapper.offsetHeight;
 
     let possibleX = currentX + movementY * -2 * rangeX;
     const rotationY = currentY + movementX * rangeY;
