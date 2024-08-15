@@ -1,0 +1,19 @@
+.grid {
+    display: grid;
+    width: min(100%, 60rem);
+    margin-inline: auto;
+    padding: 3rem 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: 2rem;
+}
+
+h2 {
+    font-size: 3rem;
+    color: white;
+    margin: 1rem auto;
+    width: min(100%, 60rem);
+}
+
+main {
+    margin-block: 5rem;
+}

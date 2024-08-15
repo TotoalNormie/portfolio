@@ -1,0 +1,8 @@
+main {
+    width: min(100%, 40rem);
+    margin-inline: auto;
+    text-align: center;
+    padding: 4rem 1rem;
+    text-align: left;
+    color: white;
+}

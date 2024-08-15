@@ -1,0 +1,186 @@
+@font-face {
+    font-family: "Times New Roman";
+    src: url('./fonts/times-new-roman.ttf');
+}
+
+@font-face {
+    font-family: "Times New Roman Bold";
+    src: url('./fonts/times-new-roman-bold.ttf');
+}
+
+.file-open {
+    display: grid;
+    justify-items: center;
+    position: relative;
+    padding: 2rem;
+}
+
+.file-contents {
+    font-family: "Times New Roman", serif;
+    font-weight: 600;
+    width: min(100%, 60rem);
+    min-height: calc(100svh - 5rem);
+    position: relative;
+    padding: 2rem 3rem;
+    background-color: rgb(232, 251, 248);
+    border: 0.1rem solid rgb(81, 87, 86);
+    isolation: isolate;
+    z-index: 5;
+}
+
+.file-contents.down {
+    transform: translateY(-200%);
+    animation: file-down 1s forwards ease-out;
+}
+.file-contents.up {
+    animation: file-up 1s forwards ease-out;
+}
+
+.file-contents::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgb(232, 251, 248);
+    /* background-color: green; */
+
+    /* transform: rotate(5deg); */
+    z-index: -1;
+}
+
+.file-contents::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgb(169, 178, 176);
+    /* background-color: red; */
+    transform: rotate(0deg);
+    z-index: -2;
+    transition: transform .5s;
+}
+
+.file-contents .paper {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgb(151, 160, 158);
+    /* background-color: red; */
+    transform: rotate(0deg);
+    transition: transform .5s;
+
+    z-index: -3;
+}
+
+.file-contents .paper:nth-child(2) {
+    background-color: rgb(116, 123, 121);
+    /* background-color: red;   */
+    transform: rotate(0deg);
+
+    z-index: -4;
+}
+
+.file-contents:hover::after {
+    transform: rotate(1deg);
+}
+
+.file-contents:hover .paper {
+    transform: rotate(2deg);
+}
+
+.file-contents:hover .paper:nth-child(2) {
+    transform: rotate(3deg);
+}
+
+
+
+.file-contents .close {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    user-select: none;
+    transition: color .5s ease;
+    cursor: pointer;
+}
+
+
+.file-contents .close:hover {
+    color: gray;
+}
+
+.file-contents h2 {
+    font-family: "Times New Roman Bold", serif;
+    color: inherit;
+    font-size: 2em;
+    font-weight: 700;
+    text-align: center;
+}
+
+.file-contents strong {
+    font-family: "Times New Roman Bold", serif;
+}
+
+.file-contents img {
+    width: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.file-contents p {
+    text-align: left;
+}
+
+.file-contents .images {
+    display: grid;
+    gap: 1rem;
+}
+
+.background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-color: rgba(47, 52, 51, 0.5);
+    animation: fade-in 1s forwards;
+}
+
+.background.out {
+    animation: fade-out 1s forwards;
+}
+
+@keyframes file-down {
+    from {
+        transform: translateY(-200%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes file-up {
+    to {
+        transform: translateY(-200%);
+    }
+
+    from {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-out {
+    to {
+        opacity: 0;
+    }
+
+    from {
+        opacity: 1;
+    }
+}
