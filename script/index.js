@@ -30,14 +30,12 @@ const openFile = (selectedId) => {
   } else {
     link.remove();
   }
-  console.log(link);
   images.innerHTML = project.images.map((image) => `<img src="images/${image}"/>`).join('');
 
-  
+
   const closeFile = () => {
     background.classList.add('out');
     const fileOpen = document.querySelector('.file-open');
-    console.log(fileOpen, background);
     fileOpen.querySelector('.file-contents').classList.add('up');
     setTimeout(() => {
       isFileOpen = false;
@@ -104,10 +102,10 @@ const Drawer = () => {
   const rotationRangeArr = [280, 350];
   const rangeX = rotationRangeArr[1] - rotationRangeArr[0];
   const rangeY = 360;
-  let animationID, animationRunning = true, isDrawerPressed = false;
+  let animationID, animationRunning = true, isDrawerPressed = false, touchStartX = null, touchStartY = null;
 
   function drawerHover(e) {
-    if (!e.movementX && !e.movementY) return;
+    // if (!e.movementX && !e.movementY) return;
     if (!drawer || !drawerWrapper) return;
     if (!isDrawerPressed || isFileOpen) {
       if (!animationRunning) {
@@ -121,6 +119,7 @@ const Drawer = () => {
       }
       return;
     }
+    console.log(navigator.userAgent);
 
     if (animationRunning) {
       cancelAnimationFrame(animationID);
@@ -137,25 +136,25 @@ const Drawer = () => {
 
     if (isNaN(currentX) || isNaN(currentY)) return;
 
-    let touchStartX, touchStartY, movementX, movementY;
+    let movementX, movementY;
 
-    // const touches = e.touches;
-    // if (touches && touches.length) {
-    //   const firstTouch = touches[0];
-    //   if (touchStartX === undefined || touchStartY === undefined) {
-    //     touchStartX = firstTouch.clientX;
-    //     touchStartY = firstTouch.clientY;
-    //   }
+    const touches = e.touches;
+    if (touches && touches.length) {
+      const firstTouch = touches[0];
+      if (touchStartX === null || touchStartY === null) {
+        touchStartX = firstTouch.clientX;
+        touchStartY = firstTouch.clientY;
+      }
 
-    //   movementX = (firstTouch.clientX - touchStartX) / drawerWrapper.offsetWidth;
-    //   movementY = (firstTouch.clientY - touchStartY) / drawerWrapper.offsetHeight;
-    //   touchStartX = firstTouch.clientX;
-    //   touchStartY = firstTouch.clientY;
-    // }
-    
+      movementX = (firstTouch.clientX - touchStartX) / drawerWrapper.offsetWidth;
+      movementY = (firstTouch.clientY - touchStartY) / drawerWrapper.offsetHeight;
 
-    movementX = e.movementX / drawerWrapper.offsetWidth;
-    movementY = e.movementY / drawerWrapper.offsetHeight;
+      touchStartX = firstTouch.clientX;
+      touchStartY = firstTouch.clientY;
+    } else {
+      movementX = e.movementX / drawerWrapper.offsetWidth;
+      movementY = e.movementY / drawerWrapper.offsetHeight;
+    }
 
     let possibleX = currentX + movementY * -2 * rangeX;
     const rotationY = currentY + movementX * rangeY;
@@ -169,30 +168,35 @@ const Drawer = () => {
     // console.log(e.movementX, e.movementY);
   }
 
-  drawer.insertAdjacentHTML(
-    "afterbegin",
-    Object.keys(projects)
-      .map((type) => DrawerBox(type, projects[type]))
-      .join("")
-  );
+  for (const type of Object.keys(projects).reverse()) {
+    // console.log(type);
+    drawer.insertAdjacentHTML("afterbegin", DrawerBox(type, projects[type]));
+  }
 
   const drawerBoxes = drawer.querySelectorAll('.drawer-box');
   drawerBoxes.forEach((drawerBox) => {
     drawerBox.addEventListener('mousedown', () => drag = false);
+    drawerBox.addEventListener('touchstart', () => drag = false);
     drawerBox.addEventListener('mousemove', () => drag = true);
-    drawerBox.addEventListener('click', () => drag = true);
+    drawerBox.addEventListener('touchmove', () => drag = true);
   });
 
   drawerWrapper.addEventListener("mousemove", drawerHover);
-  drawerWrapper.addEventListener("mousedown", () => {
-    isDrawerPressed = true;
-  });
-  drawerWrapper.addEventListener("mouseup", (e) => {
+  drawerWrapper.addEventListener("touchmove", drawerHover, { passive: true });
+  drawerWrapper.addEventListener("mousedown", () => isDrawerPressed = true);
+  drawerWrapper.addEventListener("touchstart", () => isDrawerPressed = true);
+  const handleMouseUp = (e) => {
     isDrawerPressed = false;
-    if(e.target.classList.contains('drawer-box') || e.target.closest('.drawer-box')) {
+    touchStartX = null;
+    touchStartY = null;
+    if(e.type == 'touchend') return;
+    if (e.target.matches('.drawer-box') || e.target.closest('.drawer-box')) {
       openDrawer(e);
     }
-  });
+  }
+  drawerWrapper.addEventListener("mouseup", handleMouseUp);
+  drawerWrapper.addEventListener("touchend", handleMouseUp);
+
 
   rotateDrawer();
 
@@ -204,7 +208,6 @@ const Drawer = () => {
     function animateRotation() {
       animationID = requestAnimationFrame(animateRotation);
       const elapsed = Date.now() - then;
-      // console.log(elapsed);
       if (elapsed < interval) return;
       then = Date.now();
       const drawerStyles = getComputedStyle(drawer);
@@ -223,7 +226,6 @@ const Drawer = () => {
       } else if (currentX > desiredX) {
         movementX -= 0.1;
       }
-      // console.log(movementX);
 
       drawer.style.setProperty("--rotationX", movementX + "deg");
       drawer.style.setProperty("--rotationY", movementY + "deg");
@@ -235,18 +237,21 @@ const Drawer = () => {
   // background.addEventListener('click')
 };
 function openDrawer(e) {
-  console.log(drag ? 'drag' : 'click');
-  if(drag) return;
+  // console.log(drag ? 'drag' : 'click');
+  if (drag) return;
   if (e.target.dataset.file) return;
   const drawerBox = e.target.closest(".drawer-box");
-  console.log(drawerBox);
-  if (drawerBox.classList.contains("opened")) {
+  if(drawerBox.classList.contains('opened')) {
+    console.log('closing');
     drawerBox.classList.remove("opened");
     drawerBox.classList.add("closed");
-  } else {
+  }else {
+    console.log('openuing');
+
     drawerBox.classList.add("opened");
     drawerBox.classList.remove("closed");
   }
+  console.log(e)
 }
 
 function orderBy(array, key) {

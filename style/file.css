@@ -18,7 +18,7 @@
 .file-contents {
     font-family: "Times New Roman", serif;
     font-weight: 600;
-    width: min(100%, 60rem);
+    width: min(100%, 40rem);
     min-height: calc(100svh - 5rem);
     position: relative;
     padding: 2rem 3rem;

@@ -14,7 +14,7 @@
 }
 
 .drawer-container {
-  font-size: clamp(0.8rem, 2.5vw, 1.8rem);
+  font-size: clamp(0.8rem, 2.5vw, 1.7rem);
   --side-color: #a1babb;
   --side-color-tint: #b6ccbf;
   --wall-color: #bdcdd1;
@@ -41,7 +41,6 @@
   width: var(--width);
   height: var(--height);
   user-select: none;
-  /* transition: transform 0.1s linear; */
 }
 
 
