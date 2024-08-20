@@ -1,53 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="style/main.css" />
+		<link rel="stylesheet" href="style/file.css" />
+		<link rel="stylesheet" href="style/simpler.css" />
+		<script src="data/projects.js"></script>
+		<script src="script/simpler.js"></script>
+		<title>Vitaly Juhno Portfolio</title>
+	</head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style/main.css" />
-    <link rel="stylesheet" href="style/file.css" />
-    <link rel="stylesheet" href="style/simpler.css" />
-    <script src="data/projects.js"></script>
-    <script src="script/simpler.js"></script>
-    <title>Vitaly Juhno Portfolio</title>
-</head>
+	<body>
+		<header>
+			<a href="/">Portfolio</a>
+			<a href="/simpler-porfolio">Simpler Portfolio</a>
+			<a href="/about">About</a>
+			<a href="/contacts">Contacts</a>
+		</header>
+		<main></main>
+		<template>
+			<div class="file-contents">
+				<h2 name="name"></h2>
+				<p name="description"></p>
+				<p>
+					<strong>Used technologies: </strong>
+					<span name="technologies"> </span>
+					;
+				</p>
+				<p name="link">
+					<strong>Link: </strong>
+					<a href="" target="_blank" rel="noreferrer"></a>
+				</p>
 
-<body>
-    <header>
-        <a href="/"><em>Portfolio</em></a>
-        <a href="/simpler-porfolio"><em>Simpler Portfolio</em></a>
-        <a href="/about"><em>About</em></a>
-        <a href="/contacts"><em>Contacts</em></a>
-    </header>
-    <main>
-
-    </main>
-    <template>
-        <div class="file-contents">
-            <h2 name="name"></h2>
-            <p name="description"></p>
-            <p>
-                <strong>Used technologies: </strong>
-                <span name="technologies">
-
-                </span>
-                ;
-            </p>
-            <p name="link">
-                <strong>Link: </strong>
-                <a href="" target='_blank' rel='noreferrer'></a>
-            </p>
-
-            <p>
-                <strong>Project example:</strong>
-            </p>
-            <div name="images" class="images">
-            </div>
-            <div class="paper"></div>
-            <div class="paper"></div>
-        </div>
-    </template>
-
-</body>
-
+				<p>
+					<strong>Project example:</strong>
+				</p>
+				<div name="images" class="images"></div>
+				<div class="paper"></div>
+				<div class="paper"></div>
+				<div class="paper"></div>
+			</div>
+		</template>
+	</body>
 </html>

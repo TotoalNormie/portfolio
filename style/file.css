@@ -12,7 +12,7 @@
     display: grid;
     justify-items: center;
     position: relative;
-    padding: 2rem;
+    padding: 4rem 2rem ;
 }
 
 .file-contents {
@@ -182,5 +182,11 @@
 
     from {
         opacity: 1;
+    }
+}
+
+@media (max-width: 44rem) {
+    .file-contents {
+        padding: 1rem 1.5rem;
     }
 }
